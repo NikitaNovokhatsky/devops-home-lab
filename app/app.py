@@ -1,7 +1,13 @@
-from flask import Flask
 import socket
 import platform
-from datetime import datetime
+from flask import Flask
+
+from routes.system import system_bp
+
+app = Flask(__name__)
+
+app.register_blueprint(system_bp)
+
 
 app = Flask(__name__)
 
@@ -9,8 +15,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return {
-        "message": "DevOps Home",
-        "author": "Nikita"
+        "service": "Infrastructure dashboard",
+        "status": "runing"
     }
 
 
@@ -22,14 +28,14 @@ def health():
     }
 
 
-@app.route("/hostname")
+@app.route("/")
 def hostname():
     return {
         "hostname": socket.gethostname()
     }
 
 
-@app.route("/info")
+@app.route("/")
 def info():
     return {
         "python_version": platform.python_version(),
